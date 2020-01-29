@@ -36,9 +36,18 @@ if (process.env.NETWORK === "mainnet") {
   networkID = "5777"; //todo
   networkName = 'ganache'
 }
-
-const secrets = require('@root/secrets.json')
-const mnemonic = secrets.mnemonic;
+let mnemonic
+try {
+  const secrets = require('@root/secrets.json')
+  mnemonic = secrets.mnemonic;
+} catch (error) {
+  if (networkID="5777") {
+    mnemonic = "candy maple cake sugar pudding cream honey rich smooth crumble sweet treat";
+  } else {
+    console.log("Please set a secrets.json file in the root")
+    exit()
+  }
+}
 
 const ethersAccount = i => {
   const path = "m/44'/60'/0'/0/" + i;

@@ -8,8 +8,9 @@
     "compile": "./untruffle/compile.sh; node ./untruffle/buildContractJSON.js",
     "compile5": "./untruffle/compile5.sh; node ./untruffle/buildContractJSON.js",
     "deploy": "node ./deploy",
-    "ganache": "SECRET=`cat ./secret.txt` && node ./node_modules/ganache-cli/cli.js -i 5777 -p 7545 -m \"$SECRET\"",
-    "task": "node ./tasks"
+    "ganache": "SECRET=`node ./untruffle/logSecret.js` && node ./node_modules/ganache-cli/cli.js -i 5777 -p 7545 -m \"$SECRET\"",
+    "task": "node ./tasks",
+    "logSecret": "node ./untruffle/logSecret.js"
   },
   "author": "Joe Bernitt",
   "license": "ISC",
