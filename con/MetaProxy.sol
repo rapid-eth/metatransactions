@@ -1,7 +1,7 @@
 pragma solidity ^0.5.13;
 pragma experimental ABIEncoderV2;
 
-import "./Solidity-RLP/RLPReader.sol";
+import "./solidity-rlp/RLPReader.sol";
 
 contract MetaProxy {
     using RLPReader for RLPReader.RLPItem;
