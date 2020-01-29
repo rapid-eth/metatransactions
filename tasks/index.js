@@ -9,12 +9,13 @@ let deployAccount = utils.ethersAccount(0)
 
 const main = async () => {
     console.log("Running Main Task...")
-    let rawSignedMetaTx = await createMetaTx("Hello, MetaTx World!")
+    let rawSignedMetaTx = await createMetaTx("Hello, MetaTx World")
     await runMeta(rawSignedMetaTx)
     await checkStoreValue(deployAccount.address)
     console.log("Done")
 }
 const createMetaTx = async (textToSetStore) => {
+    console.log("Creating meta transaction...")
     let nonce = await metaProxyContract.nonces(deployAccount.address)
     let metaContract = normalContract.connectMeta(deployAccount.toMetaWallet())
     let rawSignedMetaTx = await metaContract.setStore(textToSetStore, { nonce })
@@ -22,6 +23,7 @@ const createMetaTx = async (textToSetStore) => {
 }
 
 const runMeta = async (rlp) => {
+    console.log("Posting meta transaction to blockchain...")
     let anotherAccount = utils.ethersAccount(2)
     let con = metaProxyContract.connect(anotherAccount)
     let tx = await con.proxy(rlp)
