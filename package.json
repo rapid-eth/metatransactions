@@ -1,0 +1,30 @@
+{
+  "name": "metatx-experiments",
+  "version": "1.0.0",
+  "description": "Simple, easy, plug and play metatransactions for ethereum smart contracts",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "./untruffle/compile.sh; node ./untruffle/buildContractJSON.js",
+    "compile5": "./untruffle/compile5.sh; node ./untruffle/buildContractJSON.js",
+    "deploy": "node ./deploy",
+    "ganache": "SECRET=`cat ./secret.txt` && node ./node_modules/ganache-cli/cli.js -i 5777 -p 7545 -m \"$SECRET\"",
+    "task": "node ./tasks"
+  },
+  "author": "Joe Bernitt",
+  "license": "ISC",
+  "dependencies": {
+    "ethers": "^4.0.42",
+    "module-alias": "^2.2.2"
+  },
+  "_moduleAliases": {
+    "@root": ".",
+    "@contracts": "build/contracts",
+    "@deployed": "build/deployed",
+    "@utils": "untruffle/utils",
+    "@ethersWrapper": "lib"
+  },
+  "devDependencies": {
+    "ganache-cli": "6.4.1"
+  }
+}
