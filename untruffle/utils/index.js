@@ -41,6 +41,7 @@ try {
   const secrets = require('@root/secrets.json')
   mnemonic = secrets.mnemonic;
 } catch (error) {
+  console.warn("NO MNEMONIC SET: using default")
   if (networkID="5777") {
     mnemonic = "candy maple cake sugar pudding cream honey rich smooth crumble sweet treat";
   } else {

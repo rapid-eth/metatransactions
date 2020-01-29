@@ -4,7 +4,6 @@ const utils = require("@utils/index.js");
 let deployAccount = utils.ethersAccount(0)
 
 const main = async () => {
-    console.log("Deployment not configured yet!")
     await deployNormalMetaWrapper()
 }
 
