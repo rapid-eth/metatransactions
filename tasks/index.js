@@ -4,16 +4,19 @@ const ethers = utils.ethers
 
 const normalContract = utils.getDeployedContract('NormalMetaWrapper')
 const metaProxyContract = utils.getDeployedContract('MetaProxy')
+const tdcontract = utils.getDeployedContract('TestDecode')
 
 let deployAccount = utils.ethersAccount(0)
 
 const main = async () => {
     console.log("Running Main Task...")
     let rawSignedMetaTx = await createMetaTx("Hello, MetaTx World")
+    await metaProxyContract.rawToMetaTx(rawSignedMetaTx)
     await runMeta(rawSignedMetaTx)
     await checkStoreValue(deployAccount.address)
     console.log("Done")
 }
+
 const createMetaTx = async (textToSetStore) => {
     console.log("Creating meta transaction...")
     let nonce = await metaProxyContract.nonces(deployAccount.address)
@@ -35,4 +38,5 @@ const checkStoreValue = async (address) => {
     let storeVal = await normalContract.store(address)
     console.log("Store Value for address: " + storeVal)
 }
+
 main();

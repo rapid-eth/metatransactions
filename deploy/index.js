@@ -5,6 +5,7 @@ let deployAccount = utils.ethersAccount(0)
 
 const main = async () => {
     await deployNormalMetaWrapper()
+    await deployTestDecode()
 }
 
 const deployNormalMetaWrapper = async () => {
@@ -14,5 +15,11 @@ const deployNormalMetaWrapper = async () => {
     console.log("MetaProxy Contract deployed at address: " + metaC.address)
 }
 
+
+const deployTestDecode = async () => {
+    const a = await utils.deployContractAndWriteToFile('TestDecode', deployAccount, [])
+
+    console.log("TestDecode Contract deployed at address: " + a.address)
+}
 
 main();

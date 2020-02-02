@@ -1,19 +1,17 @@
-pragma solidity ^0.5.13;
+pragma solidity ^0.6.0;
 pragma experimental ABIEncoderV2;
 
-import "./solidity-rlp/RLPReader.sol";
+// import "./solidity-rlp/RLPReader.sol";
 
 contract MetaProxy {
-    using RLPReader for RLPReader.RLPItem;
-    using RLPReader for bytes;
 
     address public currentSigner;
     mapping (address => uint256) public nonces;
 
     struct MetaTransaction {
-        uint nonce;
+        uint256 nonce;
         address to;
-        uint expires;
+        uint256 expires;
         bytes data;
         uint8 v;
         bytes32 r;
@@ -38,17 +36,38 @@ contract MetaProxy {
         currentSigner = address(0x0);
     }
 
-    function rawToMetaTx(bytes memory rawMetaTx) public pure returns (MetaTransaction memory mtx) {
-        RLPReader.RLPItem[] memory ls = rawMetaTx.toRlpItem().toList();
+    // function rawToMetaTx(bytes memory rawMetaTx) public pure returns (MetaTransaction memory mtx) {
+    //     RLPReader.RLPItem[] memory ls = rawMetaTx.toRlpItem().toList();
 
-        mtx.nonce = ls[0].toUint();
-        mtx.to = ls[1].toAddress();
-        mtx.expires = ls[2].toUint();
-        mtx.data = ls[3].toBytes();
-        mtx.v = uint8(ls[4].toUint());
-        mtx.r = bytes32(ls[5].toUint());
-        mtx.s = bytes32(ls[6].toUint());
+    //     mtx.nonce = ls[0].toUint();
+    //     mtx.to = ls[1].toAddress();
+    //     mtx.expires = ls[2].toUint();
+    //     mtx.data = ls[3].toBytes();
+    //     mtx.v = uint8(ls[4].toUint());
+    //     mtx.r = bytes32(ls[5].toUint());
+    //     mtx.s = bytes32(ls[6].toUint());
+    // }
+
+    function rawToMetaTx(bytes memory rawMetaTx) public pure returns (MetaTransaction memory mtx) {
+
+        (uint256 nonce,
+        address to,
+        uint256 expires,
+        bytes memory data,
+        uint8 v,
+        bytes32 r,
+        bytes32 s) = abi.decode(rawMetaTx, (uint256,address,uint256,bytes,uint8,bytes32,bytes32));
+
+
+        mtx.nonce = nonce;
+        mtx.to = to;
+        mtx.expires = expires;
+        mtx.data = data;
+        mtx.v = v;
+        mtx.r = r;
+        mtx.s = s;
     }
+
 
     function verifySigner(MetaTransaction memory _tx) public pure returns (address) {
         bytes32 rawHash = keccak256(abi.encodePacked(_tx.nonce, _tx.to, _tx.expires, _tx.data));

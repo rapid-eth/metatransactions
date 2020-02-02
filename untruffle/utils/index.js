@@ -41,9 +41,10 @@ try {
   const secrets = require('@root/secrets.json')
   mnemonic = secrets.mnemonic;
 } catch (error) {
-  console.warn("NO MNEMONIC SET: using default")
   if (networkID="5777") {
+    console.warn("NO MNEMONIC SET: using default")
     mnemonic = "candy maple cake sugar pudding cream honey rich smooth crumble sweet treat";
+    exit()
   } else {
     console.log("Please set a secrets.json file in the root")
     exit()
@@ -130,5 +131,6 @@ module.exports = {
   emptyAddress,
   parseUnits: ethers.utils.parseUnits,
   deployContractAndWriteToFile,
+  ethers
   //getWeb3DeployedContract
 };

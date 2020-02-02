@@ -1,4 +1,4 @@
-pragma solidity ^0.5.0;
+pragma solidity ^0.6.0;
 
 contract Normal {
     address public owner;
@@ -13,7 +13,7 @@ contract Normal {
         store[getSender()] = s;
     }
 
-    function getSender() internal view returns (address) {
+    function getSender() internal virtual view returns (address) {
         return msg.sender;
     }
 }

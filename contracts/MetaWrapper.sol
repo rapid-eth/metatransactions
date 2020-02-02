@@ -1,5 +1,4 @@
-pragma solidity ^0.5.0;
-
+pragma solidity ^0.6.0;
 import "./MetaProxy.sol";
 
 contract MetaWrapper {
@@ -16,7 +15,7 @@ contract MetaWrapper {
     }
 
     //override parent
-    function getSender() internal view returns (address) {
+    function getSender() internal virtual view returns (address) {
         address metaSigner = metaTxProxyContract.currentSigner();
         if (metaSigner == address(0)) {
             return msg.sender;
